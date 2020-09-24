@@ -24,7 +24,7 @@
 
   - name: Add floating IP 
     os_floating_ip:
-      cloud: ospcloud
+      cloud: openstack
       state: present
       reuse: yes
       server: "{{ item.key }}"
