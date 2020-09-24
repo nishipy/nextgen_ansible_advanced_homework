@@ -1,3 +1,5 @@
 ---
 
 # tasks file for osp.servers
+  - include_tasks: create-instance.yml
+    with_dict: "{{ osp_servers }}" 

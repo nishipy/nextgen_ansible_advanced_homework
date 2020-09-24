@@ -1,5 +1,15 @@
 - name: Create Homework Assignment project
-
+  tower_project:
+    name: "{{ proj_name }}"
+    description: "Homework Assignment project"
+    organization: "Default"
+    scm_type: "git"
+    scm_url: "{{ scm_url }}"
+    scm_branch: "master"
+    scm_update_on_launch: True
+    scm_update_cache_timeout: 60    
+    tower_host: tower1.80e6.example.opentlc.com
+    state: present
 
 - name: Machine Credentail to connect to workstation using openstack.pub
   tower_credential:
@@ -8,9 +18,9 @@
     state: present
     kind: ssh
     tower_host: tower1.{{tower_GUID}}.example.opentlc.com
-    tower_username: admin
-    tower_password: r3dh4t1!
-    ssh_key_data: "/root/.ssh/openstack.pem"
+    tower_username: "admin"
+    tower_password: "r3dh4t1!"
+    ssh_key_data: "{{ lookup('file', '/root/.ssh/openstack.pem') }}"
     username: cloud-user
 
 - name: Create Inventory
@@ -48,7 +58,7 @@
     tower_username: admin
     tower_password: r3dh4t1!
     tower_verify_ssl: no
-    ssh_key_data: /root/.ssh/mykey.pem
+    ssh_key_data: "{{ lookup('file', '/root/.ssh/mykey.pem') }}"
     username: "{{ opentlc_login }}"
 
 - name: Remove secret
