@@ -2,7 +2,27 @@
   gather_facts: false
   tasks:
   - name: OpenStack servers
-  - name: Curl website
+    os_server_info:
+      cloud: openstack
+      server: 'frontend'
+    register: openstack_info
+  
+  - name: Check if all osp instance exist
+    debug: "{{ openstack_info.openstack_servers | length }}"
+    register: osp_instance
+
+  - debug: var=osp_instance
+
+
+  - name: Access website
+    uri:
+      url: "http://{{ item.public_v4 }}"
+      status_code: 200
+      return_content: yes
+    when: 'item.hostname == "frontend"'
+    loop: "{{ openstack_info.openstack_servers }}"
+    register: webpage
+    ignore_errors: yes
 
   - name: Fail if 'Ansible has done its job' is not in the page content
     fail:
