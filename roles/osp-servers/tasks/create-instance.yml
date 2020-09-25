@@ -2,6 +2,7 @@
 
 # tasks file for osp.servers
 
+  #https://docs.ansible.com/ansible/2.3/os_server_module.html
   - name: Create an osp server instance
     os_server:
       cloud: openstack
